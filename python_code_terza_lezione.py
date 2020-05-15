@@ -25,7 +25,7 @@ csv_file.close()
 csv_newfile.close()
 '''
 
-csv_file = open('nuovo_csv.csv', 'r')
+csv_file = open('nuovo_csv.csv', 'r') # «r» serve per la lettura
 coordinate = csv.reader(csv_file, delimiter = ',')
 
 '''
@@ -67,3 +67,25 @@ writer.writerow(header)
 writer.writerows(lista)
 csv_file.close()
 csvfile_write.close()
+
+# Seconda parte
+
+# Comandi di processing in QGIS sono scritti in Python
+# e molti sfruttanpo libreria GDal
+# scrivere algoritmo in Python con GDal permette di velocizzare e ottimizzare il processor
+# comandi su: https://pcjericks.github.io/py-gdalogr-cookbook/
+
+# Occorre importare GDal
+import gdal
+import os
+
+os.chdir('/Users/enricopriarone/Desktop/Lab_2')
+
+# Usiamo comando di gdal
+raster_file = gdal.Open('Montecristo.tif')
+# print(type(raster_file))
+metadata = raster_file.GetMedatada()
+projection = raster_file.GetProjection()
+
+# Per chiudere il datasetCount
+rsater_file = None
