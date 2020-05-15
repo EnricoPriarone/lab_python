@@ -123,7 +123,7 @@ print(list[1])
 # Aggiungo prima riga attraverso una lista
 header = ['id', 'xcoord', 'ycoord', 'quota']
 writer.writerow(header)
-writer.writerow(list)
+writer.writerows(list)
 # occorre ciudere i due file prima di completare
 csv_file.close()
 csv_newfile.close()
