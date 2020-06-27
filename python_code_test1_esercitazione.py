@@ -94,7 +94,7 @@ def agg_quota(csv_file, raster):
         
     # Scrivo la lista di liste e l'header nel csv
     # Definisco il nome del nuovo file aggiungendo una parte al nome di quello vecchio
-    name = csv_file.split('.')[0] + '_quotato.csv'
+    name = csv_file.split('.')[0] + '_q.csv'
     csvfile_write = open(name,'w') 
     writer = csv.writer(csvfile_write)
     writer.writerow(fields) 
@@ -107,9 +107,9 @@ def agg_quota(csv_file, raster):
 
     ### Trasformo i .csv in .shp
     
-    # Creo il nuovo shapefile definendone il driver e il datasource
+     # Creo il nuovo shapefile definendone il driver e il datasource
     driver = ogr.GetDriverByName('ESRI Shapefile')
-    shapefile = driver.CreateDataSource('punti_quotati.shp')
+    shapefile = driver.CreateDataSource(name.split('.')[0] + '_punti_quotati.shp')
 
     # Apro e leggo il file csv con DictReader
     csvfile = open(name)
@@ -121,8 +121,8 @@ def agg_quota(csv_file, raster):
     SR.ImportFromEPSG(32632)
 
     # Creo il layer definendo nome, sistema di riferimento e tipologia di geometria
-    layer = shapefile.CreateLayer('punti_quotati', SR, ogr.wkbPoint) 
-
+    layer = shapefile.CreateLayer(name.split('.')[0] + '_punti_quotati.shp', SR, ogr.wkbPoint) 
+    
     # Definisco nome e tipologia dei vari campi della tabella attributi e li creo
     layer.CreateField(ogr.FieldDefn('Cod_reg', ogr.OFTInteger))
     layer.CreateField(ogr.FieldDefn('Cod_cm', ogr.OFTInteger))
@@ -150,7 +150,7 @@ def agg_quota(csv_file, raster):
         feature.SetField('Cod_reg', row['COD_REG'])
         feature.SetField('Cod_cm', row['COD_CM'])
         feature.SetField('Cod_pro', row['COD_PRO'])
-        feature.SetField('Pro_co ', row['PRO_COM'])
+        feature.SetField('Pro_com', row['PRO_COM'])
         feature.SetField('Comune', row['COMUNE'])
         feature.SetField('Nome_Ted', row['NOME_TED'])
         feature.SetField('Flag_cm', row['FLAG_CM'])
