@@ -41,7 +41,7 @@ dataset = None
 
 #### Seconda parte
 
-# Creo un'unica funzione che aggiunga la quota ai csv e trasformi i nuovi file in .shp
+# Creo un'unica funzione che aggiunga la quota ai csv (creandone nuovi) e trasformi i nuovi file in .shp
 def agg_quota(csv_file, raster):
     ### Aggiungo la quota ai .csv
     
@@ -164,7 +164,7 @@ def agg_quota(csv_file, raster):
         wkt = "POINT(%f %f)" %  (float(row['xcoord']) , float(row['ycoord']))
         # Creo la geometria dalla sringa scritta in wkt
         point = ogr.CreateGeometryFromWkt(wkt)
-        # Sssegno la geometria creata alla feature
+        # Assegno la geometria creata alla feature
         feature.SetGeometry(point)
         
         # Creo la feature (con attributi e geometria) all'interno del layer
