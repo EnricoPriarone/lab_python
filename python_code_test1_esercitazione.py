@@ -34,7 +34,7 @@ output = 'dem_lombardia_100m_WGS84_32N.tif'
 gdal.Warp(output, dataset, dstSRS = 'EPSG:32632')
 # è cambiata anche l'unità di misura di coordinate e pixel (in «Proprietà»)
 
-raster = None
+dataset = None
 
 
 
