@@ -34,6 +34,7 @@ output = 'dem_lombardia_100m_WGS84_32N.tif'
 gdal.Warp(output, dataset, dstSRS = 'EPSG:32632')
 # è cambiata anche l'unità di misura di coordinate e pixel (in «Proprietà»)
 
+# Chiudo il file
 dataset = None
 
 
@@ -55,7 +56,7 @@ def agg_quota(csv_file, raster):
     band = dem.GetRasterBand(1)
     
     # Definisco i campi del nuovo csv
-    fields = ['COD_REG', 'COD_CM', 'COD_PRO', 'PRO_COM', 'COMUNE', 'NOME_TED', 'FLAG_CM', 'SHAPE_Leng', 'SHAPE_Area', 'xcoord', 'ycoord', 'quota']
+    fields = ['COD_REG', 'COD_CM', 'COD_PRO', 'PRO_COM', 'COMUNE', 'NOME_TED', 'FLAG_CM', 'SHAPE_Leng', 'SHAPE_Area', 'xcoord', 'ycoord', 'Quota']
     # Creo la lista vuota che poi scriverò nel nuovo csv
     lista = []
     
@@ -140,7 +141,7 @@ def agg_quota(csv_file, raster):
     layer.CreateField(ogr.FieldDefn('ycoord', ogr.OFTReal))
     layer.CreateField(ogr.FieldDefn('Quota', ogr.OFTInteger))
 
-    # Faccio un ciclo for per scrivere ogni riga del mio csv nella tabella attributi del layer
+    # Faccio un ciclo for per scrivere ogni riga del csv nella tabella attributi del layer
     for row in reader:
         # Estraggo la definizione del layer
         layer_defn = layer.GetLayerDefn()
@@ -158,7 +159,7 @@ def agg_quota(csv_file, raster):
         feature.SetField('Shape_Area', row['SHAPE_Area'])
         feature.SetField('xcoord', row['xcoord'])
         feature.SetField('ycoord', row['ycoord'])
-        feature.SetField('Quota', row['quota'])
+        feature.SetField('Quota', row['Quota'])
         
         # Scrivo la geometria in linguaggio wkt
         wkt = "POINT(%f %f)" %  (float(row['xcoord']) , float(row['ycoord']))
@@ -177,7 +178,7 @@ def agg_quota(csv_file, raster):
     
 # agg_quota ('comuni_lomb_cremona.csv', 'dem_lombardia_100m_WGS84_32N.tif')
 
-# Faccio il ciclo glob per richiamare il dem riproiettato e via via i vari csv presenti nella cartella
+# Faccio il ciclo glob per richiamare nella funzione «agg_quota» il dem riproiettato e via via i vari csv presenti nella cartella
 for doc in glob.glob('*csv'):
     dem = 'dem_lombardia_100m_WGS84_32N.tif'
     agg_quota (doc, dem)
