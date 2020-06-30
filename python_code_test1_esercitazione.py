@@ -12,7 +12,6 @@ sarà quindi necessario riproiettarlo (questo lo potete fare all'esterno della f
 from osgeo import gdal, gdal_array
 import ogr, osr
 import os
-import numpy as np
 import glob
 import csv
 
